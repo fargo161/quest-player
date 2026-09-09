@@ -37,7 +37,7 @@ test('real PostgreSQL and SMTP integration', async t => {
   await writeFile('.local/test-evidence/latest-database.txt',dbName);
 
   await t.test('empty database migrations reproducible and health check works',async()=>{
-    assert.equal((await pool.query('SELECT count(*) FROM schema_migrations')).rows[0].count,'3');
+    assert.equal((await pool.query('SELECT count(*) FROM schema_migrations')).rows[0].count,'4');
     await request(app).get('/healthz').expect(200,{ok:true});
     await request(app).get('/assets/styles.css').expect(200).expect('Content-Type',/css/);
     await request(app).get('/start/unknown').expect(404);

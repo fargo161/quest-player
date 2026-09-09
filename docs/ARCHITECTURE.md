@@ -19,3 +19,7 @@ Profiles read participation, rewards, and history from a single repeatable-read 
 There is no offline queue or local authority over reward state. A failed HTTP response may hide a committed action, so the form's request UUID must be retained when retrying. Video failure cannot block the text introduction or Continue action. Backups must include all application tables, including sessions, idempotency records, and audit history. An actual restore and verification are required before festival readiness; see deployment and backup documentation for execution evidence and procedures.
 
 The UI is a functional foundation. The initial seeded introduction does not invent physical objectives, prize counts, or final event content.
+
+## State-specific content
+
+Migration004 adds quest_content and immutable content_revisions. The content state/category selects presentation only; it is not a new player state machine. NONE/ACTIVE/COMPLETED slots map participation and ELIGIBLE/SELECTED/FULFILLED slots independently map rewards. Profiles derive both from authoritative database records and suppress suspended reward content. Staff-only editor saves use existing action_requests deduplication, a quest row lock, optimistic content version checks, and atomic snapshot history with operator/reason. Public media is loaded by the browser over HTTPS, never fetched by the server. Art Park infrastructure is reference-only; separate Quest Player service/database resources are required.

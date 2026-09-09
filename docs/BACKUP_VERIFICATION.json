@@ -1,114 +1,130 @@
 {
   "verified": true,
-  "performedAt": "2026-09-09T23:25:52.478Z",
-  "verificationDatabase": "qp_verify_1788996350693_c21622683a",
+  "performedAt": "2026-09-09T23:40:10.070Z",
+  "verificationDatabase": "qp_verify_1788997208413_94b28683cc",
   "sourceSnapshotMatched": true,
   "tables": {
     "action_requests": {
-      "count": "13",
-      "fingerprint": "fb2144900971d965306561037cddfdd5"
+      "count": "9",
+      "fingerprint": "00ba23eb34deba9d7cc6e52d7d817ca2"
+    },
+    "content_revisions": {
+      "count": "6",
+      "fingerprint": "4f863920a7bfa90745e36ae5334fb1f4"
     },
     "email_tokens": {
-      "count": "3",
-      "fingerprint": "bb8725254332f3f13ab2b24de4866c99"
+      "count": "0",
+      "fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
     },
     "events": {
-      "count": "2",
-      "fingerprint": "fc9fe185321ea9ff60ea6a30fa3e9a49"
+      "count": "1",
+      "fingerprint": "e8fcd9fa8d23c2abe4ad03292116dee5"
     },
     "operator_actions": {
-      "count": "11",
-      "fingerprint": "263cbaa05ddc466471a4ef4544b38691"
+      "count": "3",
+      "fingerprint": "d71abdd925baf2d49396fba99f54c182"
     },
     "player_quests": {
-      "count": "4",
-      "fingerprint": "c28f9a496ffd2cff12572568c42c2384"
+      "count": "1",
+      "fingerprint": "ca67abaaca58cd20d94e11359a3abe33"
     },
     "player_rewards": {
-      "count": "2",
-      "fingerprint": "be19dd00d6520f634f5015ad742898e6"
+      "count": "1",
+      "fingerprint": "4ea09a3dbaed05f5cb9796996e858496"
     },
     "players": {
-      "count": "3",
-      "fingerprint": "bcdee0dd3b0d03bdee6a332af88c2230"
+      "count": "1",
+      "fingerprint": "a1229c4b6a4d9e48d5261ffea86c1df4"
+    },
+    "quest_content": {
+      "count": "6",
+      "fingerprint": "048db1c38230f450c17b305a67675954"
     },
     "quest_events": {
-      "count": "16",
-      "fingerprint": "47337c8a779a23fc02cd0a3cdc0ffb68"
+      "count": "5",
+      "fingerprint": "d7abba83921dbd7d9221602acca1452c"
     },
     "quests": {
-      "count": "2",
-      "fingerprint": "a4eb93953012f530c6334e379195d22d"
+      "count": "1",
+      "fingerprint": "fcc66e16027b1af4b4437356939f0253"
     },
     "rate_limits": {
-      "count": "13",
-      "fingerprint": "c067f2c8de04549c60e3d0d6521c2772"
+      "count": "4",
+      "fingerprint": "e02deda94ad136ba0e89aef6fdc2f736"
     },
     "rewards": {
       "count": "1",
-      "fingerprint": "b8d7b903ad7680c512191f29c54e947a"
+      "fingerprint": "ff6fb4ba5c0e1265840eee7d8b39db5f"
     },
     "schema_migrations": {
-      "count": "3",
-      "fingerprint": "3c3361697b7cf19f32e66dd3db1ca1cd"
+      "count": "4",
+      "fingerprint": "78b377c0f8d7dadb5ce54302edf0b809"
     },
     "sessions": {
-      "count": "8",
-      "fingerprint": "5598ca2bd5a6aeebbc8af66c32b6be3d"
+      "count": "2",
+      "fingerprint": "03b4390229766efa1334cf4c0df264c2"
     }
   },
   "expected": {
     "action_requests": {
-      "count": "13",
-      "fingerprint": "fb2144900971d965306561037cddfdd5"
+      "count": "9",
+      "fingerprint": "00ba23eb34deba9d7cc6e52d7d817ca2"
+    },
+    "content_revisions": {
+      "count": "6",
+      "fingerprint": "4f863920a7bfa90745e36ae5334fb1f4"
     },
     "email_tokens": {
-      "count": "3",
-      "fingerprint": "bb8725254332f3f13ab2b24de4866c99"
+      "count": "0",
+      "fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
     },
     "events": {
-      "count": "2",
-      "fingerprint": "fc9fe185321ea9ff60ea6a30fa3e9a49"
+      "count": "1",
+      "fingerprint": "e8fcd9fa8d23c2abe4ad03292116dee5"
     },
     "operator_actions": {
-      "count": "11",
-      "fingerprint": "263cbaa05ddc466471a4ef4544b38691"
+      "count": "3",
+      "fingerprint": "d71abdd925baf2d49396fba99f54c182"
     },
     "player_quests": {
-      "count": "4",
-      "fingerprint": "c28f9a496ffd2cff12572568c42c2384"
+      "count": "1",
+      "fingerprint": "ca67abaaca58cd20d94e11359a3abe33"
     },
     "player_rewards": {
-      "count": "2",
-      "fingerprint": "be19dd00d6520f634f5015ad742898e6"
+      "count": "1",
+      "fingerprint": "4ea09a3dbaed05f5cb9796996e858496"
     },
     "players": {
-      "count": "3",
-      "fingerprint": "bcdee0dd3b0d03bdee6a332af88c2230"
+      "count": "1",
+      "fingerprint": "a1229c4b6a4d9e48d5261ffea86c1df4"
+    },
+    "quest_content": {
+      "count": "6",
+      "fingerprint": "048db1c38230f450c17b305a67675954"
     },
     "quest_events": {
-      "count": "16",
-      "fingerprint": "47337c8a779a23fc02cd0a3cdc0ffb68"
+      "count": "5",
+      "fingerprint": "d7abba83921dbd7d9221602acca1452c"
     },
     "quests": {
-      "count": "2",
-      "fingerprint": "a4eb93953012f530c6334e379195d22d"
+      "count": "1",
+      "fingerprint": "fcc66e16027b1af4b4437356939f0253"
     },
     "rate_limits": {
-      "count": "13",
-      "fingerprint": "c067f2c8de04549c60e3d0d6521c2772"
+      "count": "4",
+      "fingerprint": "e02deda94ad136ba0e89aef6fdc2f736"
     },
     "rewards": {
       "count": "1",
-      "fingerprint": "b8d7b903ad7680c512191f29c54e947a"
+      "fingerprint": "ff6fb4ba5c0e1265840eee7d8b39db5f"
     },
     "schema_migrations": {
-      "count": "3",
-      "fingerprint": "3c3361697b7cf19f32e66dd3db1ca1cd"
+      "count": "4",
+      "fingerprint": "78b377c0f8d7dadb5ce54302edf0b809"
     },
     "sessions": {
-      "count": "8",
-      "fingerprint": "5598ca2bd5a6aeebbc8af66c32b6be3d"
+      "count": "2",
+      "fingerprint": "03b4390229766efa1334cf4c0df264c2"
     }
   },
   "note": "Counts and complete row fingerprints for all public tables were compared against the dump snapshot, including quest and operator audit histories. Restore database and sensitive dump retained for operator inspection and cleanup."

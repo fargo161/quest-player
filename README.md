@@ -44,20 +44,18 @@ Real SMTP delivery is implemented with Nodemailer; it is not a stub. For real in
 
 Verification must be confirmed in the existing player browser. Recovery can be confirmed in a new browser and revokes prior sessions for that player. Links expire after 20 minutes and are single-use. GET only shows a confirmation; POST consumes the link. See [identity details](docs/PLAYER_IDENTITY.md).
 
-## Media configuration
+## State content and media
 
-Media belongs outside Git. Set a publicly readable HTTPS R2/CDN URL in `quests.intro_video_url` and the fallback introduction in `quests.intro_text`. The role is the quest introduction; the URL and descriptive text are stored in PostgreSQL. No R2 credentials are required by the web server to play public media. `R2_PUBLIC_BASE_URL` documents the operator's media origin and does not automatically rewrite existing database URLs.
+In Mission Control, choose **Edit player content** at `/admin/content`. Select the quest and one of its six slots:
 
-For example, with psql connected to the intended database:
+- Participation: NONE (before joining), ACTIVE, COMPLETED.
+- Rewards: ELIGIBLE, SELECTED, FULFILLED.
 
-```sql
-UPDATE quests
-SET intro_video_url = 'https://media.your-domain.example/intro.mp4',
-    intro_text = 'Your approved introduction text.'
-WHERE slug = 'as-above-so-below';
-```
+Edit a title, plain text, optional HTTPS image URL with description, and optional direct HTTPS video URL. Enter a reason and save. Changes appear when the player opens or refreshes the relevant page. A completed player sees COMPLETED quest content alongside their independent reward-state content. Suspended rewards show their standard paused explanation without reward-specific media. No mid-quest scans are needed.
 
-The URL above is illustrative: replace it with a real hosted file. A video failure never removes the text or Continue button. V0.1 does not include a media editor or invented quest mechanics.
+The server chooses content from persisted participation/reward state. Editing content cannot grant completion or rewards. Saves are atomic with an immutable revision, operator initials, reason and request reference. Concurrent stale edits return a conflict rather than overwriting a newer version. Blank fields clear the corresponding content; standard instructions and Continue remain available even if media fails. Existing intro text/video are copied into ACTIVE content by migration004.
+
+Upload media separately and paste its public HTTPS R2/CDN URL. This is a small content editor, not an upload service or a full CMS. `quest_content` is the content source of truth; `content_revisions` keeps old snapshots. Legacy `quests.intro_*` fields are fallback/migration inputs for newly added quests, not the ongoing editor. `R2_PUBLIC_BASE_URL` documents the media origin and does not rewrite URLs.
 
 ## Production QR
 
@@ -95,7 +93,7 @@ Choose your own private backup directory. Dumps include account data and session
 
 See [DEPLOYMENT.md](DEPLOYMENT.md). The repository includes a non-root Node 24 Dockerfile and a Render Blueprint for the web app plus PostgreSQL. `npm start` respects `PORT`; `/healthz` checks database connectivity. Run `npm run migrate` as the pre-deploy command. Configure the permanent HTTPS origin, secrets and working SMTP credentials in Render. Upload media to R2 separately.
 
-This repository has not been deployed to Render, connected to a real sender domain, or assigned a permanent hostname. The Docker image was built and tested against a fresh PostgreSQL 18 container; non-root execution, PORT override, migrations and health/entry routes passed.
+Art Park already exists on Render as a reference only. Do not reuse, connect to, migrate or modify its database. Provision separate Quest Player service/database resources. No custom domain or email delivery provider is configured yet; R2 is precedent only. See [live setup boundaries](docs/LIVE_SETUP.md). This repository has not been deployed to Render, connected to a real sender domain, or assigned a permanent hostname. The Docker image was built and tested against a fresh PostgreSQL 18 container; non-root execution, PORT override, migrations and health/entry routes passed.
 
 ## Maintenance and boundaries
 

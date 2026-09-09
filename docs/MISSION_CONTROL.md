@@ -24,3 +24,13 @@ The system requires an online connection. Retry interrupted submissions safely, 
 Players can add and verify an email from their profile. Recovery works only after verification. A Player ID is a public account reference and must never be accepted as a password or recovery credential. Without a verified email, losing the signed-in browser may mean losing access.
 
 Video is optional: players can read the introduction and continue even if media fails. Creative quest instructions and final event assets are separate from this functional interface.
+
+## Editing player-facing content
+
+Choose **Edit player content** in Mission Control. Pick the quest and the desired slot: participation NONE, ACTIVE or COMPLETED; or reward ELIGIBLE, SELECTED or FULFILLED. Participation and rewards are independent. A completed player may see completed-quest content together with selected-reward content.
+
+Edit the title, plain text and optional HTTPS image/video URLs. Image descriptions are required for images. Upload media separately; the editor stores URLs, not uploaded files. Put essential instructions in the plain text so failed media never blocks progress. HTML is displayed as text. Empty fields remove that additional content and leave the standard instructions.
+
+Supply a meaningful change reason. **Save and publish content** takes effect immediately. The version check prevents silently overwriting a newer staff edit; if a conflict is reported, reopen the editor, compare the latest content, and reapply your intended change. Saved revision snapshots retain operator, timestamp and reason.
+
+Editing content never changes a player's participation or reward state. Those still require their separate staff actions. Paused rewards do not display reward content until the eligibility correction is resolved.

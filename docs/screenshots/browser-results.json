@@ -1,16 +1,19 @@
 {
-  "database": "qp_browser_1788996570577_65d0eb0c",
+  "database": "qp_browser_1788997150197_977d5442",
   "viewport": {
     "width": 390,
     "height": 844
   },
   "checks": [
+    "06-mobile-content-editor: no horizontal overflow",
+    "Staff editor publishes six distinct participation/reward content slots and displays immutable version history",
     "01-mobile-start: no horizontal overflow",
     "02-mobile-intro-media-failure: no horizontal overflow",
     "03-mobile-active-profile: no horizontal overflow",
     "Player signup, durable profile, stable Player ID, failed video fallback and Continue",
     "04-mobile-staff-handoff: no horizontal overflow",
     "05-mobile-fulfilled-profile: no horizontal overflow",
+    "Database state selects participation and reward content independently; failed HTTPS image/video retain text and allow progress",
     "Separate staff session, Player ID lookup, completion, selection, required physical handoff confirmation, fulfillment visible in original player session",
     "Three staff operations produce three operator audit records"
   ],
@@ -19,9 +22,18 @@
     "net::ERR_FAILED",
     "Failed to load resource: net::ERR_FAILED",
     "net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "net::ERR_FAILED",
+    "Failed to load resource: net::ERR_FAILED",
+    "net::ERR_FAILED",
     "Failed to load resource: net::ERR_FAILED"
   ],
   "screenshots": [
+    "06-mobile-content-editor.png",
     "01-mobile-start.png",
     "02-mobile-intro-media-failure.png",
     "03-mobile-active-profile.png",

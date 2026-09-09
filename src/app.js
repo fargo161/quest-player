@@ -4,6 +4,7 @@ import { randomBytes, randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import * as domain from './domain.js';
 import * as views from './views.js';
+import {getContent,listContent,saveContent} from './content.js';
 import { token, digest, same, httpError, normalizedEmail, uuid, sessionMiddleware, csrf, limiter, issueSession, activateSession } from './security.js';
 
 export function createApp({ pool, config, mailer }) {
@@ -12,7 +13,7 @@ export function createApp({ pool, config, mailer }) {
   if (config.production) app.set('trust proxy', 1);
   app.use(helmet({ contentSecurityPolicy: { directives: {
     defaultSrc: ["'self'"], scriptSrc: ["'self'"], styleSrc: ["'self'"],
-    mediaSrc: ["'self'", 'https:'], imgSrc: ["'self'", 'data:'],
+    mediaSrc: ["'self'", 'https:'], imgSrc: ["'self'", 'data:', 'https:'],
     formAction: ["'self'"], frameAncestors: ["'none'"],
     upgradeInsecureRequests: config.production ? [] : null,
   } }, referrerPolicy: { policy: 'strict-origin' }, strictTransportSecurity: config.production }));
@@ -21,7 +22,7 @@ export function createApp({ pool, config, mailer }) {
     catch { res.status(503).json({ ok: false }); }
   });
   app.use('/assets', express.static(fileURLToPath(new URL('../public/', import.meta.url)), { maxAge: '1h' }));
-  app.use(express.urlencoded({ extended: false, limit: '12kb' }));
+  app.use(express.urlencoded({ extended: false, limit: '128kb', parameterLimit: 50 }));
   app.use((_req, res, next) => { res.set('Cache-Control', 'no-store'); next(); });
   app.use(limiter(pool, config, 'all', 6000, 60));
   app.use(sessionMiddleware(pool, config));
@@ -36,7 +37,14 @@ export function createApp({ pool, config, mailer }) {
     return quest;
   };
   app.get('/', (_req, res) => res.redirect('/start/as-above-so-below'));
-  app.get('/start/:slug', async (req, res) => res.send(views.startPage({ quest: await questBySlug(req.params.slug), player: await currentPlayer(req), csrf: req.session.csrf })));
+  const participationContent = async (quest, playerId) => {
+    const state = playerId ? (await pool.query('SELECT status FROM player_quests WHERE player_id=$1 AND quest_id=$2', [playerId, quest.id])).rows[0]?.status || 'NONE' : 'NONE';
+    return getContent(pool, quest.id, state);
+  };
+  app.get('/start/:slug', async (req, res) => {
+    const quest = await questBySlug(req.params.slug);
+    res.send(views.startPage({ quest, player: await currentPlayer(req), content: await participationContent(quest, req.session.player_id), csrf: req.session.csrf }));
+  });
   app.post('/start/:slug', limiter(pool, config, 'signup-ip', 3000, 3600), limiter(pool, config, 'signup-session', 10, 3600, req => req.session.token_hash), async (req, res) => {
     await questBySlug(req.params.slug);
     const client = await pool.connect();
@@ -72,7 +80,7 @@ export function createApp({ pool, config, mailer }) {
     const quest = await questBySlug(req.params.slug);
     const participation = await pool.query('SELECT 1 FROM player_quests WHERE player_id=$1 AND quest_id=$2', [req.session.player_id, quest.id]);
     if (!participation.rowCount) return res.redirect(303, `/start/${quest.slug}`);
-    res.send(views.introPage({ quest, csrf: req.session.csrf }));
+    res.send(views.introPage({ quest, content: await participationContent(quest, req.session.player_id), csrf: req.session.csrf }));
   });
   app.post('/intro/:slug', playerOnly, async (req, res) => {
     const quest = await questBySlug(req.params.slug);
@@ -81,7 +89,12 @@ export function createApp({ pool, config, mailer }) {
       ON CONFLICT DO NOTHING`, [req.session.player_id, quest.id]);
     res.redirect(303, '/me');
   });
-  app.get('/me', playerOnly, async (req, res) => res.send(views.profilePage({ data: await domain.profile(pool, req.session.player_id), csrf: req.session.csrf, message: req.query.sent === '1' ? 'Check your email for a verification link. Your email is not verified until you confirm it.' : req.query.verified === '1' ? 'Your recovery email is verified.' : undefined })));
+  app.get('/me', playerOnly, async (req, res) => {
+    const data = await domain.profile(pool, req.session.player_id);
+    for (const participation of data.participations) participation.content = await getContent(pool, participation.quest_id, participation.status);
+    for (const reward of data.rewards) if (!reward.suspended) reward.content = await getContent(pool, reward.quest_id, reward.status);
+    res.send(views.profilePage({ data, csrf: req.session.csrf, message: req.query.sent === '1' ? 'Check your email for a verification link. Your email is not verified until you confirm it.' : req.query.verified === '1' ? 'Your recovery email is verified.' : undefined }));
+  });
   app.post('/logout', async (req, res) => { await req.rotateSession(); res.redirect(303, '/'); });
   const emailLimit = limiter(pool, config, 'email-address', 5, 3600, req => String(req.body.email || '').trim().toLowerCase());
   async function sendLink(player, email, purpose) {
@@ -149,6 +162,20 @@ export function createApp({ pool, config, mailer }) {
   app.get('/admin', adminOnly, async (req, res) => {
     const query = typeof req.query.q === 'string' ? req.query.q.slice(0,100) : '';
     res.send(views.adminSearchPage({ players: await domain.findPlayers(pool, query), query, csrf: req.session.csrf, operator: req.session.operator }));
+  });
+  app.get('/admin/content', adminOnly, async (req, res) => {
+    const quests = (await pool.query('SELECT id,slug,name FROM quests ORDER BY name')).rows;
+    res.send(views.contentIndexPage({ quests, csrf: req.session.csrf, operator: req.session.operator }));
+  });
+  app.get('/admin/content/:slug/:state', adminOnly, async (req, res) => {
+    const data = await listContent(pool, req.params.slug);
+    const content = await getContent(pool, data.quest.id, req.params.state);
+    res.send(views.contentEditorPage({ ...data, content, csrf: req.session.csrf, operator: req.session.operator, message: req.query.saved === '1' ? 'Content saved. Players see it when they next open or refresh the page.' : undefined }));
+  });
+  app.post('/admin/content/:slug/:state', adminOnly, async (req, res) => {
+    const quest = await questBySlug(req.params.slug);
+    await saveContent(pool, { questId: quest.id, state: req.params.state, title: req.body.title, body: req.body.body, image_url: req.body.image_url, image_alt: req.body.image_alt, video_url: req.body.video_url, version: req.body.version, operator: req.session.operator, requestId: req.body.requestId, reason: req.body.reason });
+    res.redirect(303, '/admin/content/' + quest.slug + '/' + req.params.state + '?saved=1');
   });
   app.get('/admin/players/:id', adminOnly, async (req, res) => res.send(views.adminDetailPage({ data: await domain.playerDetail(pool, uuid(req.params.id)), csrf: req.session.csrf, operator: req.session.operator, message: req.query.saved === '1' ? 'Action recorded. Review the current state below.' : undefined })));
   const action = fn => async (req, res) => {

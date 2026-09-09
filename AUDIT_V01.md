@@ -43,3 +43,11 @@ No unresolved blocker or high-severity implementation finding remains from this 
 ## Final integration additions
 
 Actual mobile Chrome testing exposed a form Origin mismatch caused by Referrer-Policy=no-referrer. The application now uses strict-origin: it excludes secret URL paths/queries from referrers while allowing the expected same-origin form POST. The full mobile player/staff journey subsequently passed. A real backup and restore compared all 13 public tables successfully, followed by an application smoke check against the restored data. See docs/VALIDATION.md for final combined test, container and clean-install evidence.
+
+## Content editor extension review
+
+The state-content suite passed six scenarios plus its parent against real PostgreSQL. It checks staff authorization/CSRF, full-length Unicode text via HTTP, unsafe media protocols, escaped literal HTML, idempotent requests, conflicting payloads, stale concurrent versions, rollback when revision insertion fails, immutable snapshots, separate participation/reward rendering, suppression of suspended reward content, unchanged progression after editing, and preservation of legacy intro data in migration004.
+
+No blocker/high content defect was found in the reviewed changes. Media is fetched only by the browser; text is escaped. Saved content is presentation, never completion/eligibility authority. Raw assets are not uploaded here: operators supply external HTTPS URLs. Revisions retain operator attribution, reason and snapshots. A canonical URL can be longer than its supplied internationalized string; the editor's URL length limit applies to input and is not an asset size limit.
+
+Actual mobile Chrome testing published all six slots through the staff UI and verified the player saw the correct participation and independent reward content. Failed image/video requests preserved text and Continue. Art Park service/database were not accessed. Live infrastructure facts are recorded in docs/LIVE_SETUP.md.

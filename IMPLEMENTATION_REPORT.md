@@ -8,6 +8,8 @@ Completion and each reward stage are distinct. Mistakes can be corrected with re
 
 The database can hold future events under the same player identity. The code does not define the physical puzzles or final creative presentation. This is a functional foundation for that separate work.
 
+Live setup facts: Art Park exists on Render for reference only. Its database has not been accessed and must never be reused or modified by this project. Quest Player needs separate service/database resources. No custom domain or email provider is configured. Cloudflare R2 is precedent only. [Recorded live setup](docs/LIVE_SETUP.md).
+
 This is not yet a live festival service: Render, a permanent hostname, actual email-provider credentials/sender verification, and real media content still need configuration. Local SMTP testing proves the code delivers mail to a server; it does not prove delivery into a public inbox. No production QR was generated against an invented hostname.
 
 ## Technical implementation
@@ -31,6 +33,8 @@ Stack: Node 24 LTS, Express 5, PostgreSQL 18, Nodemailer SMTP, server-rendered H
 | action_requests | Durable idempotency input/result records |
 | rate_limits | Shared PostgreSQL-backed abuse controls |
 | schema_migrations | Versioned schema installation record |
+| quest_content | Text/image/video per quest and separate participation/reward state |
+| content_revisions | Immutable content snapshots, operator, reason and version |
 
 Completion, eligibility and audit use one transaction. Staff transitions lock participation before reward rows. Recovery serializes by player and commits token consumption, session revocation and new session creation together. Original history and fulfilled entitlements have database immutability triggers. Read views use consistent snapshots.
 
@@ -57,6 +61,8 @@ The session cookie is HttpOnly, SameSite=Lax, Secure in production, and valid fo
 | POST | /admin/players/:id/correct-quest | Correct completion with reason |
 | POST | /admin/players/:id/correct-reward | Correct selection or record fulfilled exception |
 | POST | /admin/logout | Remove operator authority |
+| GET | /admin/content | Choose quest and participation/reward content slot |
+| GET, POST | /admin/content/:slug/:state | Read/edit state-specific content with version protection |
 | GET | /assets/styles.css | Mobile stylesheet |
 
 ### Source layout
@@ -65,7 +71,7 @@ The session cookie is HttpOnly, SameSite=Lax, Secure in production, and valid fo
 quest-player/
   src/               app, config, database, domain, mailer, security, server, views
   public/            mobile stylesheet
-  migrations/        domain schema, auth schema, intro deduplication
+  migrations/        domain, auth, intro deduplication, state content
   scripts/           migrate, QR, backup/restore, expiry cleanup, local PostgreSQL
   test/              integration, resilience regression, browser journey
   docs/              architecture, identity, quest model, staff/operations guides
@@ -77,6 +83,10 @@ quest-player/
   DEPLOYMENT.md
   AUDIT_V01.md
 ```
+
+## Content editor addition
+
+Mission Control now supports title, plain text, image URL/description and video URL for NONE, ACTIVE, COMPLETED participation and ELIGIBLE, SELECTED, FULFILLED rewards. The two categories stay separate. Players automatically see the correct content from their recorded state; no mid-quest scans are required. A content edit never changes quest/reward authority. Edits require staff authentication and CSRF, are retry-safe, reject stale versions, and commit with immutable operator-attributed revisions. Essential standard instructions remain available when media fails.
 
 ## Verification
 
@@ -103,7 +113,7 @@ Open http://localhost:3000/start/as-above-so-below. Staff use http://localhost:3
 
 ## Render requirements
 
-Connect the repository to Render and apply render.yaml. It declares a Docker web service and PostgreSQL 18 database. Use npm run migrate as the pre-deploy command, npm start as the container command, and /healthz as the health-check route. Required operator settings: stable HTTPS PUBLIC_BASE_URL, generated SESSION_SECRET, long MISSION_CONTROL_PASSPHRASE, SMTP_HOST/PORT/SECURE/USER/PASS and MAIL_FROM. Render supplies DATABASE_URL and PORT. Store the external intro URL/text in quests. R2_PUBLIC_BASE_URL records the media origin and does not upload assets.
+Connect the repository to Render and apply render.yaml. It declares a Docker web service and PostgreSQL 18 database. Use npm run migrate as the pre-deploy command, npm start as the container command, and /healthz as the health-check route. Required operator settings: stable HTTPS PUBLIC_BASE_URL, generated SESSION_SECRET, long MISSION_CONTROL_PASSPHRASE, SMTP_HOST/PORT/SECURE/USER/PASS and MAIL_FROM. Render supplies DATABASE_URL and PORT. Use Mission Control /admin/content to configure text, image and video for each state. R2_PUBLIC_BASE_URL records the media origin and does not upload assets.
 
 Before use with attendees: prove delivery to a real inbox and recovery on another browser; test representative festival connectivity/load; validate hosted backup/restore and the deployed container; upload final content; generate and physically scan the permanent QR. Existing local restore evidence satisfies the implementation drill, not the future hosted service's backup policy.
 

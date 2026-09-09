@@ -21,6 +21,15 @@ This addendum incorporates the user's September 9, 2026 decisions and supersedes
 3. Integrate and test with real PostgreSQL and local SMTP capture, including simultaneous requests and corrections.
 4. Adversarial audit, clean installation and backup/restore verification. Report actual evidence and external launch prerequisites.
 
-## Inventory
+## Initial inventory
 
-The task directory contained only empty work/output directories and was not a Git repository. No applicable AGENTS.md was found in the checked task ancestors. Node v24.18.0 and npm 11.16.0 are available. Docker CLI is available but Docker engine is not running. PostgreSQL tools are not on PATH. No existing application is being overwritten.
+The task directory contained only empty work/output directories and was not a Git repository. No applicable AGENTS.md was found in the checked task ancestors. Node v24.18.0 and npm 11.16.0 are available. At initial inventory the Docker CLI was available but its engine was stopped; subsequent local validation started Docker Desktop and exercised the image. PostgreSQL tools are not on PATH. No existing application is being overwritten.
+
+## Confirmed live setup boundaries and content extension
+
+Art Park's existing Render service and PostgreSQL database are reference-only. Quest Player uses a separate service and database. Never reuse, connect this app to, migrate, restore into, or modify the Art Park database. Reuse infrastructure patterns only. No Quest Player custom domain or email delivery provider is configured. Existing R2 usage provides precedent, not authorization to modify existing buckets. Live resource IDs and credentials are intentionally unspecified.
+
+Mission Control now includes state content editing at `/admin/content`. For participation NONE/ACTIVE/COMPLETED and reward ELIGIBLE/SELECTED/FULFILLED, staff can configure a title, plain text, HTTPS image URL with alt text, and HTTPS video URL. Participation and reward content are separate categories; actual database state selects what players see. Editing content cannot grant completion, selection, or fulfillment. No additional scan is required.
+
+Content saves atomically retain operator attribution and immutable revision history, reject stale versions, and use request IDs for safe retries. Empty text uses the existing fallback copy. Missing media must never block progress. This extension supersedes earlier limitations requiring direct SQL or omitting a content editor; it does not decide the physical quest or final creative assets.
+
