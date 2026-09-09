@@ -17,7 +17,7 @@ Without Docker, start your own PostgreSQL server, set DATABASE_URL, and use a lo
 5. Configure the quest intro_video_url in PostgreSQL to a public HTTPS media URL. R2_PUBLIC_BASE_URL is reserved configuration and does not upload media or automatically rewrite quest rows. No R2 credentials are needed to play a public video. Use a stable custom media domain where appropriate; verify content type, browser playback and an unavailable-video fallback. Text and Continue must still work.
 6. Complete the operations checklist, including an actual backup/restore verification, before using the service with attendees.
 
-Changing SESSION_SECRET invalidates signed cookies. Treat that as a deliberate account access event. Never delete or recreate the database as a normal redeploy. Take a backup before migrations. Rolling back app code does not reverse database migrations: assess schema compatibility first.
+Changing SESSION_SECRET invalidates existing session credentials and emailed recovery/verification tokens. Treat that as a deliberate account access event. Never delete or recreate the database as a normal redeploy. Take a backup before migrations. Rolling back app code does not reverse database migrations: assess schema compatibility first.
 
 ## Printed QR codes
 

@@ -80,7 +80,7 @@ quest-player/
 
 ## Verification
 
-The integration suite initially passed 15 scenarios (16 tests counting the parent). Four additional resilience scenarios independently passed (five tests counting the parent). It uses real PostgreSQL; the primary suite sends through an actual local SMTP server. See the final validation record for the combined run and browser/clean-install evidence.
+The final combined configuration, integration and resilience suite passed all 22 tests (20 substantive scenarios and two parent tests), with no failures or skips. It passed again from an independent clean Git clone. Tests use real PostgreSQL; the primary suite sends through an actual local SMTP server. The full mobile Chrome journey, Docker build/runtime, clean npm start and an actual database restart also passed. [Final validation record](docs/VALIDATION.md).
 
 An actual backup → restore → comparison succeeded against populated test data. All 13 public tables matched by row count and full-row fingerprints, including three players, four participation records, two reward records, 16 quest events and 11 operator audit actions. An application smoke check on the restored database confirmed completion, fulfillment, audit history, health and starting route. [Restore evidence](docs/BACKUP_VERIFICATION.json).
 

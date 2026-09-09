@@ -95,7 +95,7 @@ Choose your own private backup directory. Dumps include account data and session
 
 See [DEPLOYMENT.md](DEPLOYMENT.md). The repository includes a non-root Node 24 Dockerfile and a Render Blueprint for the web app plus PostgreSQL. `npm start` respects `PORT`; `/healthz` checks database connectivity. Run `npm run migrate` as the pre-deploy command. Configure the permanent HTTPS origin, secrets and working SMTP credentials in Render. Upload media to R2 separately.
 
-This repository has not been deployed to Render, connected to a real sender domain, or assigned a permanent hostname. The Docker engine on the build machine was unavailable, so an actual image build remains a deployment check.
+This repository has not been deployed to Render, connected to a real sender domain, or assigned a permanent hostname. The Docker image was built and tested against a fresh PostgreSQL 18 container; non-root execution, PORT override, migrations and health/entry routes passed.
 
 ## Maintenance and boundaries
 

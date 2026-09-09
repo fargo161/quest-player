@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "performedAt": "2026-09-09T23:33:51.762Z",
+  "cleanClone": true,
+  "install": "npm ci --offline using populated npm cache",
+  "migrate": "npm run migrate on fresh database",
+  "startup": "npm start",
+  "port": 43187,
+  "health": 200,
+  "playerProfile": 200,
+  "postgresRestart": "actual pg_ctl restart, retained cookie resumes same player",
+  "tests": {
+    "pass": 22,
+    "fail": 0,
+    "skip": 0
+  }
+}

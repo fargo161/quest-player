@@ -10,7 +10,7 @@ The reviewer subsequently ran `test/robustness.test.js` against its own fresh Po
 
 Covered scenarios include clean repeatable migrations, health/static routes, nickname signup and intro retries, duplicate nicknames, HTML escaping, CSRF and authorization, simultaneous completion, simultaneous fulfillment, correction history and suspension, conflicting idempotency payloads, SMTP delivery and single-use verification, cross-browser recovery and prior-session revocation, application recreation with retained cookies, expired tokens, email throttling, injected audit failure rollback, reuse at another event, and staff logout.
 
-These tests do not establish browser rendering, production mail deliverability, real mobile festival connectivity, capacity under event load, or container deployment correctness. Docker image build, Render deployment, and external SMTP/R2 setup have not been demonstrated by this audit. Backup/restore verification is being documented separately by the deployment workstream; do not infer its completion from this report.
+These tests do not establish browser rendering, production mail deliverability, real mobile festival connectivity, capacity under event load, or container deployment correctness. Render deployment and external SMTP/R2 setup have not been demonstrated. Docker evidence was added after this audit pass. Backup/restore verification is being documented separately by the deployment workstream; do not infer its completion from this report.
 
 ## Resolved findings
 
@@ -26,7 +26,7 @@ These tests do not establish browser rendering, production mail deliverability, 
 
 ## Remaining release gaps
 
-No unresolved blocker or high-severity implementation finding remains from this bounded review after the regression fixes. This is not a claim that all possible defects were ruled out. Capacity, production deployment, actual remote email deliverability, browser/mobile QA, and external backup operation remain release evidence gaps. Refer to the final verification and deployment reports for work completed after this review.
+No unresolved blocker or high-severity implementation finding remains from this bounded review after the regression fixes. This is not a claim that all possible defects were ruled out. Capacity, production deployment, actual remote email deliverability, and hosted backup operation remain release evidence gaps. Local mobile, container, clean-clone and restore checks were subsequently completed; see docs/VALIDATION.md. Refer to the final verification and deployment reports for work completed after this review.
 
 ## Important semantics and accepted limits
 
