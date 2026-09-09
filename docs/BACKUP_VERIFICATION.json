@@ -1,0 +1,115 @@
+{
+  "verified": true,
+  "performedAt": "2026-09-09T23:25:52.478Z",
+  "verificationDatabase": "qp_verify_1788996350693_c21622683a",
+  "sourceSnapshotMatched": true,
+  "tables": {
+    "action_requests": {
+      "count": "13",
+      "fingerprint": "fb2144900971d965306561037cddfdd5"
+    },
+    "email_tokens": {
+      "count": "3",
+      "fingerprint": "bb8725254332f3f13ab2b24de4866c99"
+    },
+    "events": {
+      "count": "2",
+      "fingerprint": "fc9fe185321ea9ff60ea6a30fa3e9a49"
+    },
+    "operator_actions": {
+      "count": "11",
+      "fingerprint": "263cbaa05ddc466471a4ef4544b38691"
+    },
+    "player_quests": {
+      "count": "4",
+      "fingerprint": "c28f9a496ffd2cff12572568c42c2384"
+    },
+    "player_rewards": {
+      "count": "2",
+      "fingerprint": "be19dd00d6520f634f5015ad742898e6"
+    },
+    "players": {
+      "count": "3",
+      "fingerprint": "bcdee0dd3b0d03bdee6a332af88c2230"
+    },
+    "quest_events": {
+      "count": "16",
+      "fingerprint": "47337c8a779a23fc02cd0a3cdc0ffb68"
+    },
+    "quests": {
+      "count": "2",
+      "fingerprint": "a4eb93953012f530c6334e379195d22d"
+    },
+    "rate_limits": {
+      "count": "13",
+      "fingerprint": "c067f2c8de04549c60e3d0d6521c2772"
+    },
+    "rewards": {
+      "count": "1",
+      "fingerprint": "b8d7b903ad7680c512191f29c54e947a"
+    },
+    "schema_migrations": {
+      "count": "3",
+      "fingerprint": "3c3361697b7cf19f32e66dd3db1ca1cd"
+    },
+    "sessions": {
+      "count": "8",
+      "fingerprint": "5598ca2bd5a6aeebbc8af66c32b6be3d"
+    }
+  },
+  "expected": {
+    "action_requests": {
+      "count": "13",
+      "fingerprint": "fb2144900971d965306561037cddfdd5"
+    },
+    "email_tokens": {
+      "count": "3",
+      "fingerprint": "bb8725254332f3f13ab2b24de4866c99"
+    },
+    "events": {
+      "count": "2",
+      "fingerprint": "fc9fe185321ea9ff60ea6a30fa3e9a49"
+    },
+    "operator_actions": {
+      "count": "11",
+      "fingerprint": "263cbaa05ddc466471a4ef4544b38691"
+    },
+    "player_quests": {
+      "count": "4",
+      "fingerprint": "c28f9a496ffd2cff12572568c42c2384"
+    },
+    "player_rewards": {
+      "count": "2",
+      "fingerprint": "be19dd00d6520f634f5015ad742898e6"
+    },
+    "players": {
+      "count": "3",
+      "fingerprint": "bcdee0dd3b0d03bdee6a332af88c2230"
+    },
+    "quest_events": {
+      "count": "16",
+      "fingerprint": "47337c8a779a23fc02cd0a3cdc0ffb68"
+    },
+    "quests": {
+      "count": "2",
+      "fingerprint": "a4eb93953012f530c6334e379195d22d"
+    },
+    "rate_limits": {
+      "count": "13",
+      "fingerprint": "c067f2c8de04549c60e3d0d6521c2772"
+    },
+    "rewards": {
+      "count": "1",
+      "fingerprint": "b8d7b903ad7680c512191f29c54e947a"
+    },
+    "schema_migrations": {
+      "count": "3",
+      "fingerprint": "3c3361697b7cf19f32e66dd3db1ca1cd"
+    },
+    "sessions": {
+      "count": "8",
+      "fingerprint": "5598ca2bd5a6aeebbc8af66c32b6be3d"
+    }
+  },
+  "note": "Counts and complete row fingerprints for all public tables were compared against the dump snapshot, including quest and operator audit histories. Restore database and sensitive dump retained for operator inspection and cleanup."
+}

@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: quest-player
+    runtime: docker
+    plan: web0.5c-512mb
+    healthCheckPath: /healthz
+    preDeployCommand: npm run migrate
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: quest-player-db
+          property: connectionString
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: MISSION_CONTROL_PASSPHRASE
+        sync: false
+      - key: PUBLIC_BASE_URL
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_SECURE
+        value: "false"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+      - key: R2_PUBLIC_BASE_URL
+        sync: false
+databases:
+  - name: quest-player-db
+    databaseName: quest_player
+    user: quest_player
+    plan: db0.1c-256mb
+    postgresMajorVersion: "18"
+
+
