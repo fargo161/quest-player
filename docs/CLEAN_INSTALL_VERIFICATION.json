@@ -13,5 +13,16 @@
     "pass": 22,
     "fail": 0,
     "skip": 0
+  },
+  "contentExtension": {
+    "sourceCommit": "190bfd3",
+    "updatedIndependentClone": true,
+    "existingDatabaseUpgrade": "migration004 applied successfully over baseline001-003",
+    "tests": {
+      "pass": 29,
+      "fail": 0,
+      "skip": 0
+    },
+    "dependencyChange": false
   }
 }

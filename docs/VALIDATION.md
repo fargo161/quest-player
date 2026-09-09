@@ -1,4 +1,12 @@
-# Validation record
+# Current validation — content extension
+
+The final source (commit 190bfd3) passed all 29 tests: 26 substantive scenarios plus 3 parent tests, with 0 failures/skips. The independent local clone was updated and passed the same 29 tests; its existing database upgraded from 3 to 4 migrations. Dependencies are unchanged from the clean npm ci baseline below. Actual mobile Chrome exercised all 6 content slots through staff editing and player-state transitions, with 6 overflow-free screenshots and no unexpected browser errors. Broken image/video fallback passed.
+
+The updated Docker build passed with fresh PostgreSQL 18, migration 004, UID 1000, PORT 4317, health/start 200 and protected content-editor redirect 303. Backup/restore matched all 15 public tables, including 6 content slots and 6 revisions; restored content, completed participation and fulfilled reward were verified through the domain/content services. Current evidence: DOCKER_VERIFICATION.json, BACKUP_VERIFICATION.json and screenshots/browser-results.json.
+
+Art Park's existing Render service/database were not accessed. They are reference-only. Domain and email delivery are unconfigured; R2 is precedent only. See LIVE_SETUP.md. No remote deployment has been made.
+
+## Earlier baseline verification
 
 Validation performed September 9, 2026 with synthetic data.
 

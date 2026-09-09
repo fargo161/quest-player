@@ -1,15 +1,17 @@
 {
-  "image": "sha256:af85b0bda019b61985c844b6e8d2767f7075f9336835973db3153f3c759b620d",
   "postgres": "postgres (PostgreSQL) 18.6 (Debian 18.6-1.pgdg12+2)",
   "runtime": {
     "health": 200,
     "start": 200,
+    "adminContent": 303,
+    "adminRedirect": "/admin/login",
     "uid": 1000,
     "port": 4317,
     "node": "v24.21.0"
   },
+  "performedAt": "2026-09-09T23:41:13.4932703Z",
   "scope": "Local container build and runtime smoke, not production deployment. Temporary containers/network removed after verification.",
-  "passed": true,
   "migrations": "npm run migrate succeeded against fresh PostgreSQL18 container",
-  "performedAt": "2026-09-09T23:30:33.9304789Z"
+  "passed": true,
+  "image": "sha256:06b32c43ccc6c30544f160712ec0fdc996d5c6a79ddc03163e110ac2747bb09b"
 }
